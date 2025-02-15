@@ -3,13 +3,13 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class LojaCLI {
+    public class LojaCLI {
     private final Loja loja;
     private final Scanner scanner;
     private final List<Vendedor> vendedores; // Lista de vendedores fixos
 
-    public LojaCLI() {
-        this.loja = new Loja();
+    public LojaCLI(Loja loja) {
+        this.loja = loja;
         this.scanner = new Scanner(System.in);
         this.vendedores = new ArrayList<>(); // Inicializa a lista
 
@@ -31,7 +31,7 @@ public class LojaCLI {
         while (true) {
             exibirMenu();
             int opcao = scanner.nextInt();
-            scanner.nextLine(); // Consumir a nova linha
+            scanner.nextLine(); 
 
             switch (opcao) {
                 case 1 -> cadastrarProduto();
@@ -41,6 +41,7 @@ public class LojaCLI {
                 case 5 -> exibirHistoricoVendas();
                 case 6 -> exibirClientesMaisFrequentes();
                 case 7 -> aplicarDescontoFidelidade();
+                case 8 -> exibirEstoqueProduto(); 
                 case 0 -> {
                     System.out.println("Saindo...");
                     return;
@@ -59,6 +60,7 @@ public class LojaCLI {
         System.out.println("5. Exibir Histórico de Vendas da Loja");
         System.out.println("6. Exibir Clientes Mais Frequentes");
         System.out.println("7. Aplicar Desconto de Fidelidade");
+        System.out.println("8. Exibir Estoque de um Produto"); 
         System.out.println("0. Sair");
         System.out.print("Escolha uma opção: ");
     }
@@ -204,6 +206,19 @@ public class LojaCLI {
             cliente.adicionarPontosFidelidade(-100); // Reduz pontos após uso
         } else {
             System.out.println("Pontos insuficientes. O cliente precisa de " + (100 - cliente.getPontosFidelidade()) + " pontos para obter um desconto.");
+        }
+    }
+
+    private void exibirEstoqueProduto() {
+        System.out.print("Nome do produto: ");
+        String nomeProduto = scanner.nextLine();
+        Produto produto = buscarProdutoPorNome(nomeProduto);
+        if (produto == null) {
+            System.out.println("Produto não encontrado.");
+        } else {
+            System.out.println("\n--- Estoque do Produto ---");
+            System.out.println("Produto: " + produto.getNome());
+            System.out.println("Quantidade em estoque: " + produto.getQuantidadeEstoque());
         }
     }
 

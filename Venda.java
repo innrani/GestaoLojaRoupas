@@ -41,7 +41,7 @@ public class Venda {
         return metodoPagamento;
     }
 
-    public String getVendedor(){
+    public Vendedor getVendedor(){
         return vendedor;
     }
     
