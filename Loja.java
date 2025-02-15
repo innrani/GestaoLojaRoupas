@@ -46,16 +46,6 @@ public class Loja {
         return venda;
     }
 
-    // Método para aplicar desconto de fidelidade
-    public void aplicarDescontoFidelidade(Cliente cliente, Venda venda) {
-        if (cliente.getPontosFidelidade() >= 100) {
-            double desconto = venda.calcularTotal() * 0.1; // 10% de desconto
-            System.out.println("Desconto de fidelidade aplicado: R$" + desconto);
-            venda.aplicarDesconto(desconto);
-            cliente.adicionarPontosFidelidade(-100); // Reduz pontos após uso
-        }
-    }
-
     // Métodos para exibir históricos
     public void exibirHistoricoCliente(Cliente cliente) {
         System.out.println("\n--- Histórico de Compras de " + cliente.getNome() + " ---");

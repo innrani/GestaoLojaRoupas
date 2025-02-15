@@ -3,11 +3,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class Venda {
-    private Cliente cliente;
-    private Vendedor vendedor;
-    private List<Produto> produtos;
-    private String metodoPagamento;
-    private LocalDateTime dataHora;
+    private final Cliente cliente;
+    private final Vendedor vendedor;
+    private final List<Produto> produtos;
+    private final String metodoPagamento;
+    private final LocalDateTime dataHora;
     private double totalComDesconto;
 
     public Venda(Cliente cliente, Vendedor vendedor, List<Produto> produtos, String metodoPagamento) {
@@ -16,7 +16,17 @@ public class Venda {
         this.produtos = produtos;
         this.metodoPagamento = metodoPagamento;
         this.dataHora = LocalDateTime.now();
-        
+    }
+
+    public void inicializar() {
+        processarPontosFidelidade();
+    }
+
+    public void processarPontosFidelidade() {
+        double total = calcularTotal();
+        int pontosGanhos = (int)(total / 10); 
+        cliente.adicionarPontosFidelidade(pontosGanhos);
+        System.out.println("Pontos de fidelidade ganhos nesta compra: " + pontosGanhos);
     }
 
     public double calcularTotal() {

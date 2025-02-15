@@ -17,13 +17,18 @@ public class Cliente {
         this.pontosFidelidade += pontos;
     }
 
-    public void adicionarCompra(Venda venda) {
-        historicoCompras.add(venda);
-    }
-
     public int getPontosFidelidade() {
         return pontosFidelidade;
     }
+
+    public void resetarPontosFidelidade() {
+        this.pontosFidelidade = 0;
+    }
+
+    public void adicionarCompra(Venda venda) {
+        historicoCompras.add(venda);
+    }
+    
     public String getNome() {
         return nome;
     }

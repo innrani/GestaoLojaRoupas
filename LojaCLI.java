@@ -3,17 +3,15 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-    public class LojaCLI {
+public class LojaCLI {
     private final Loja loja;
     private final Scanner scanner;
-    private final List<Vendedor> vendedores; // Lista de vendedores fixos
+    private final List<Vendedor> vendedores;
 
     public LojaCLI(Loja loja) {
         this.loja = loja;
         this.scanner = new Scanner(System.in);
-        this.vendedores = new ArrayList<>(); // Inicializa a lista
-
-        // Inicializa os vendedores fixos
+        this.vendedores = new ArrayList<>();
         inicializarVendedores();
     }
 
@@ -72,14 +70,14 @@ import java.util.stream.Collectors;
         String categoria = scanner.nextLine();
         System.out.print("Preço: ");
         double preco = scanner.nextDouble();
-        scanner.nextLine(); // Consumir a nova linha
+        scanner.nextLine();
         System.out.print("Tamanho: ");
         String tamanho = scanner.nextLine();
         System.out.print("Cor: ");
         String cor = scanner.nextLine();
         System.out.print("Quantidade em estoque: ");
         int quantidadeEstoque = scanner.nextInt();
-        scanner.nextLine(); // Consumir a nova linha
+        scanner.nextLine();
 
         Produto produto = new Produto(nome, categoria, preco, tamanho, cor, quantidadeEstoque);
         loja.cadastrarProduto(produto);
@@ -137,8 +135,10 @@ import java.util.stream.Collectors;
 
         Venda venda = loja.registrarVenda(cliente, vendedor, produtosVenda, metodoPagamento);
         vendedor.adicionarVenda(venda);
-        cliente.adicionarPontosFidelidade(10); // Adiciona pontos de fidelidade
         System.out.println("Venda registrada com sucesso para o vendedor " + vendedor.getNome() + "!");
+
+        // Processa os pontos de fidelidade e aplica o desconto, se necessário
+        venda.processarPontosFidelidade();
     }
 
     private void exibirHistoricoCliente() {
@@ -201,9 +201,10 @@ import java.util.stream.Collectors;
             return;
         }
 
+        System.out.println("Pontos atuais: " + cliente.getPontosFidelidade());
         if (cliente.getPontosFidelidade() >= 100) {
-            System.out.println("Desconto de 10% aplicado para " + cliente.getNome() + "!");
-            cliente.adicionarPontosFidelidade(-100); // Reduz pontos após uso
+            System.out.println("Cliente elegível para desconto de 10% na próxima compra!");
+            System.out.println("O desconto será aplicado automaticamente na próxima venda.");
         } else {
             System.out.println("Pontos insuficientes. O cliente precisa de " + (100 - cliente.getPontosFidelidade()) + " pontos para obter um desconto.");
         }
