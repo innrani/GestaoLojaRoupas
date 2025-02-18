@@ -15,26 +15,27 @@ public class Venda {
         this.vendedor = vendedor;
         this.produtos = produtos;
         this.metodoPagamento = metodoPagamento;
-        this.dataHora = LocalDateTime.now();
+        this.dataHora = LocalDateTime.now(); // Captura a data e hora atuais
+        this.totalComDesconto = calcularTotal(); // Inicializa o total com desconto como o total da venda
     }
 
     public void inicializar() {
-        processarPontosFidelidade();
+        processarPontosFidelidade(); // Processa os pontos de fidelidade ao inicializar a venda
     }
 
     public void processarPontosFidelidade() {
         double total = calcularTotal();
-        int pontosGanhos = (int)(total / 10); 
-        cliente.adicionarPontosFidelidade(pontosGanhos);
+        int pontosGanhos = (int)(total / 10); // 1 ponto a cada R$10 gastos
+        cliente.adicionarPontosFidelidade(pontosGanhos); // Adiciona pontos ao cliente
         System.out.println("Pontos de fidelidade ganhos nesta compra: " + pontosGanhos);
     }
 
     public double calcularTotal() {
-        return produtos.stream().mapToDouble(Produto::getPreco).sum();
+        return produtos.stream().mapToDouble(Produto::getPreco).sum(); // Soma os preços dos produtos
     }
 
     public void aplicarDesconto(double desconto) {
-        this.totalComDesconto = calcularTotal() - desconto;
+        this.totalComDesconto = calcularTotal() - desconto; // Aplica o desconto ao total
         System.out.println("Desconto de R$" + desconto + " aplicado. Novo total: R$" + totalComDesconto);
     }
 
@@ -43,15 +44,15 @@ public class Venda {
     }
     
     public String getDataHora() {
-          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-            return dataHora.format(formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"); // Formata a data e hora
+        return dataHora.format(formatter);
     }
 
-    public String getMetodoPagamento(){
+    public String getMetodoPagamento() {
         return metodoPagamento;
     }
 
-    public Vendedor getVendedor(){
+    public Vendedor getVendedor() {
         return vendedor;
     }
     
@@ -63,7 +64,7 @@ public class Venda {
         System.out.println("--- Recibo de Venda ---");
         System.out.println("Cliente: " + cliente.getNome());
         System.out.println("Vendedor: " + vendedor.getNome());
-        System.out.println("Data: " + dataHora);
+        System.out.println("Data: " + getDataHora()); // Usa a data formatada
         System.out.println("Produtos:");
         for (Produto produto : produtos) {
             System.out.println(" - " + produto.getNome() + " (" + produto.getCategoria() + "): R$" + produto.getPreco());

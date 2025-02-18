@@ -8,12 +8,19 @@ public class LojaCLI {
     private final Scanner scanner;
     private final List<Vendedor> vendedores;
 
+    public static void main(String[] args) {
+        Loja loja = new Loja();
+        LojaCLI cli = new LojaCLI(loja);
+        cli.iniciar();
+    }
+
     public LojaCLI(Loja loja) {
         this.loja = loja;
         this.scanner = new Scanner(System.in);
         this.vendedores = new ArrayList<>();
         inicializarVendedores();
     }
+   
 
     private void inicializarVendedores() {
         vendedores.add(new Vendedor("Hoshi"));
@@ -137,8 +144,6 @@ public class LojaCLI {
         vendedor.adicionarVenda(venda);
         System.out.println("Venda registrada com sucesso para o vendedor " + vendedor.getNome() + "!");
 
-        // Processa os pontos de fidelidade e aplica o desconto, se necessário
-        venda.processarPontosFidelidade();
     }
 
     private void exibirHistoricoCliente() {

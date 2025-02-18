@@ -41,6 +41,7 @@ public class Loja {
             return null;
         }
         Venda venda = new Venda(cliente, vendedor, produtos, metodoPagamento);
+        venda.inicializar();
         atualizarEstoque(produtos);
         registrarNoHistorico(cliente, vendedor, venda);
         return venda;
